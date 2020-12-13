@@ -5,19 +5,17 @@ using Xunit;
 
 namespace CourierKata.Tests
 {
-    public class ParcelTests
+    public class ParcelTests : TestBase
     {
-
-
 
         [Fact]
         public void GivenAParcelOf1CMDimensions_WhenCreateParcel_ThenCorrectCostIsReturned()
         {
             var expectedCost = 3m;
-            var parcelService = new ParcelService();
-            var parcel = parcelService.CreateParcel(1, 1, 1);
+            var parcelService = new ParcelService(Settings());
+            var parcel = parcelService.CreateParcel(1, 1, 1, 1);
             parcel.Type.ShouldBe(ParcelType.Small);
-            parcel.Cost.ShouldBe(expectedCost);
+            parcel.TotalCost.ShouldBe(expectedCost);
         }
 
         [Theory]
@@ -31,10 +29,10 @@ namespace CourierKata.Tests
         public void GivenAParcelOfDefinedDimensions_WhenCreateParcel_ThenCorrectCostIsReturned(uint width, uint height,
             uint length, decimal expectedCost, ParcelType expectedParcelType)
         {
-            var parcelService = new ParcelService();
-            var parcel = parcelService.CreateParcel(width, height, length);
+            var parcelService = new ParcelService(Settings());
+            var parcel = parcelService.CreateParcel(width, height, length, 1);
             parcel.Type.ShouldBe(expectedParcelType);
-            parcel.Cost.ShouldBe(expectedCost);
+            parcel.TotalCost.ShouldBe(expectedCost);
         }
 
     }

@@ -12,7 +12,7 @@ namespace CourierKata.Services.Services
             var totalParcelCost = 0m;
             foreach (var parcel in delivery.Parcels)
             {
-                totalParcelCost += parcel.Cost;
+                totalParcelCost += parcel.TotalCost;
             }
             delivery.TotalParcelCost = totalParcelCost;
 

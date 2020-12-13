@@ -1,46 +1,30 @@
-﻿using CourierKata.Services.Models;
+﻿using CourierKata.Services.Configuration;
+using CourierKata.Services.Models;
 using CourierKata.Tests;
 
 namespace CourierKata.Services.Services
 {
     public class ParcelService : IParcelService
     {
-        public Parcel CreateParcel(uint width, uint height, uint length)
+        private readonly Settings _settings;
+        public ParcelService(Settings settings)
         {
-            var parcel = new Parcel();
-            parcel.WidthInCentimeters = width;
-            parcel.HeightInCentimeters = height;
-            parcel.LengthInCentimeters = length;
+            _settings = settings;
+        }
 
-            if (parcel.HeightInCentimeters < 10 &&
-                parcel.WidthInCentimeters < 10 &&
-                parcel.LengthInCentimeters < 10)
+        public Parcel CreateParcel(uint width, uint height, uint length, uint weight)
+        {
+            var parcel = new Parcel
             {
-                parcel.Type = ParcelType.Small;
-                parcel.Cost = 3;
-            }
+                WidthInCentimeters = width,
+                HeightInCentimeters = height,
+                LengthInCentimeters = length,
+                WeightInKilograms = weight
+            };
 
-            else if (parcel.HeightInCentimeters < 50 &&
-                     parcel.WidthInCentimeters < 50 &&
-                     parcel.LengthInCentimeters < 50)
-            {
-                parcel.Type = ParcelType.Medium;
-                parcel.Cost = 8;
-            }
+            parcel.SetTypeByDimension(_settings);
+            parcel.SetCostByType(_settings);
 
-            else if (parcel.HeightInCentimeters < 100 &&
-                     parcel.WidthInCentimeters < 100 &&
-                     parcel.LengthInCentimeters < 100)
-            {
-                parcel.Type = ParcelType.Large;
-                parcel.Cost = 15;
-            }
-
-            else
-            {
-                parcel.Type = ParcelType.XL;
-                parcel.Cost = 25;
-            }
             return parcel;
         }
     }
