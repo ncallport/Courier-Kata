@@ -9,10 +9,13 @@
         public int MediumWeightLimit { get; set; }
         public int LargeWeightLimit { get; set; }
         public int XLWeightLimit { get; set; }
+        public int HeavyWeightLimit { get; set; }
         public decimal SmallParcelCost { get; set; }
         public decimal MediumParcelCost { get; set; }
         public decimal LargeParcelCost { get; set; }
         public decimal XLParcelCost { get; set; }
+        public decimal HeavyParcelCost { get; set; }
         public decimal OverWeightChargePerKilo { get; set; }
+        public decimal HeavyOverWeightChargePerKilo { get; set; }
     }
 }
