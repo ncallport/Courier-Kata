@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using CourierKata.Services.Models;
+using CourierKata.Services.Services;
 using Shouldly;
 using Xunit;
 using Xunit.Abstractions;
@@ -9,11 +11,13 @@ namespace CourierKata.Tests
     {
         private readonly ITestOutputHelper _testOutputHelper;
         private readonly IParcelService _parcelService;
+        private readonly IDeliveryService _deliveryService;
 
         public DeliveryTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
             _parcelService = new ParcelService();
+            _deliveryService = new DeliveryService();
         }
 
         [Fact]
@@ -23,34 +27,21 @@ namespace CourierKata.Tests
             var parcel1 = _parcelService.CreateParcel(1, 1, 1);
             var parcel2 = _parcelService.CreateParcel(1, 1, 1);
             var parcels = new List<Parcel> { parcel1, parcel2 };
-
-            var deliveryService = new DeliveryService();
-
-
-            var delivery = deliveryService.CreateDelivery(parcels);
-            delivery.TotalCost.ShouldBe(expectedTotalCost);
-            _testOutputHelper.WriteLine($"Delivery cost: {delivery.TotalCost}");
+            var delivery = _deliveryService.CreateDelivery(parcels);
+            delivery.TotalDeliveryCost.ShouldBe(expectedTotalCost);
+            _testOutputHelper.WriteLine($"Delivery cost: {delivery.TotalDeliveryCost}");
         }
-    }
 
-    public class DeliveryService
-    {
-        public Delivery CreateDelivery(List<Parcel> parcels)
+        [Fact]
+        public void GiveTwoParcelsOf1CMDimensionAndSpeedyShipping_WhenCreateDelivery_ThenCorrectTotalIsReturned()
         {
-            var delivery = new Delivery {Parcels = parcels};
-            var totalCost = 0m;
-            foreach (var parcel in delivery.Parcels)
-            {
-                totalCost += parcel.Cost;
-            }
-            delivery.TotalCost = totalCost;
-            return delivery;
+            var expectedTotalCost = 12m;
+            var parcel1 = _parcelService.CreateParcel(1, 1, 1);
+            var parcel2 = _parcelService.CreateParcel(1, 1, 1);
+            var parcels = new List<Parcel> { parcel1, parcel2 };
+            var delivery = _deliveryService.CreateDelivery(parcels, true);
+            delivery.TotalDeliveryCost.ShouldBe(expectedTotalCost);
+            _testOutputHelper.WriteLine($"Delivery cost: {delivery.TotalDeliveryCost}");
         }
-    }
-
-    public class Delivery
-    {
-        public List<Parcel> Parcels { get; set; }
-        public decimal TotalCost { get; set; }
     }
 }

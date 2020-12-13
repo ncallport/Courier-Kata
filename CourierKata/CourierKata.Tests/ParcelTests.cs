@@ -1,4 +1,6 @@
-﻿using Shouldly;
+﻿using CourierKata.Services.Models;
+using CourierKata.Services.Services;
+using Shouldly;
 using Xunit;
 
 namespace CourierKata.Tests
@@ -37,62 +39,5 @@ namespace CourierKata.Tests
 
     }
 
-    public class ParcelService : IParcelService
-    {
-        public Parcel CreateParcel(uint width, uint height, uint length)
-        {
-            var parcel = new Parcel();
-            parcel.WidthInCentimeters = width;
-            parcel.HeightInCentimeters = height;
-            parcel.LengthInCentimeters = length;
 
-            if (parcel.HeightInCentimeters < 10 &&
-                parcel.WidthInCentimeters < 10 &&
-                parcel.LengthInCentimeters < 10)
-            {
-                parcel.Type = ParcelType.Small;
-                parcel.Cost = 3;
-            }
-
-            else if (parcel.HeightInCentimeters < 50 &&
-                     parcel.WidthInCentimeters < 50 &&
-                     parcel.LengthInCentimeters < 50)
-            {
-                parcel.Type = ParcelType.Medium;
-                parcel.Cost = 8;
-            }
-
-            else if (parcel.HeightInCentimeters < 100 &&
-                     parcel.WidthInCentimeters < 100 &&
-                     parcel.LengthInCentimeters < 100)
-            {
-                parcel.Type = ParcelType.Large;
-                parcel.Cost = 15;
-            }
-
-            else
-            {
-                parcel.Type = ParcelType.XL;
-                parcel.Cost = 25;
-            }
-            return parcel;
-        }
-    }
-
-    public class Parcel
-    {
-        public uint LengthInCentimeters { get; set; }
-        public uint WidthInCentimeters { get; set; }
-        public uint HeightInCentimeters { get; set; }
-        public ParcelType Type { get; set; }
-        public decimal Cost { get; set; }
-    }
-
-    public enum ParcelType
-    {
-        Small,
-        Medium,
-        Large,
-        XL
-    }
 }

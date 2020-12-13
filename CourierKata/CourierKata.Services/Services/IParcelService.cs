@@ -1,4 +1,6 @@
-﻿namespace CourierKata.Tests
+﻿using CourierKata.Services.Models;
+
+namespace CourierKata.Tests
 {
     public interface IParcelService
     {
