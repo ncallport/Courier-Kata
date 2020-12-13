@@ -37,7 +37,7 @@ namespace CourierKata.Tests
 
     }
 
-    public class ParcelService
+    public class ParcelService : IParcelService
     {
         public Parcel CreateParcel(uint width, uint height, uint length)
         {
