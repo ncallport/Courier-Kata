@@ -17,5 +17,9 @@
         public decimal HeavyParcelCost { get; set; }
         public decimal OverWeightChargePerKilo { get; set; }
         public decimal HeavyOverWeightChargePerKilo { get; set; }
+
+        public int SmallParcelDiscountNumber { get; set; }
+        public int MediumParcelDiscountNumber { get; set; }
+        public int MixedParcelDiscountNumber { get; set; }
     }
 }

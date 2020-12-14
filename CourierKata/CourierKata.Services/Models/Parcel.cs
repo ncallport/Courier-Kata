@@ -10,5 +10,6 @@
         public decimal ExtraWeightCost { get; set; }
         public ParcelType Type { get; set; }
         public decimal TotalCost { get; set; }
+        public bool DiscountApplied { get; set; } = false;
     }
 }
